@@ -1,0 +1,14 @@
+{
+    "name": "geekdevs/swift-mailer-extensions",
+    "description": "SwiftMailer extensions",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pavel Dubinin",
+            "email": "geekdevs@gmail.com"
+        }
+    ],
+    "require": {
+        "swiftmailer/swiftmailer": "~4.3|~5"
+    }
+}
