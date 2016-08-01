@@ -8,7 +8,19 @@
             "email": "geekdevs@gmail.com"
         }
     ],
+    "keywords": [
+        "swift",
+        "mailer",
+        "extension",
+        "file",
+        "eml"
+    ],
     "require": {
         "swiftmailer/swiftmailer": "~4.3|~5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Geekdevs\\SwiftMailer\\": "src/SwiftMailer"
+        }
     }
 }

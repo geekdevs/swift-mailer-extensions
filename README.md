@@ -12,7 +12,7 @@ For dev environment it is usually desirable to prevent sending out actual emails
 
 **FileTransport** does exactly that - it stores emails into eml format which can then be opened with most email applications (e.g. Outlook or Thunderbird). It accepts event dispatcher as first argument and path to the folder where email files will be stored (you should have write access in it).
 
-Usage example:
+**Usage example:**
 
 ```
 // Initialize file transport
@@ -31,4 +31,26 @@ $message = Swift_Message::newInstance('Wonderful Subject')
 
 // Send the message
 $result = $mailer->send($message);
+```
+
+**Connecting to Symfony:**
+
+Define FileTransport as service in `services.yml`:
+
+```
+swiftmailer.mailer.transport.file:
+    class: Geekdevs\SwiftMailer\Transport\FileTransport
+    arguments:
+      - "@swiftmailer.mailer.file.transport.eventdispatcher"
+      - "%kernel.root_dir%/emails"      
+```
+
+Configure SwiftMailer to understand new transport in `config.yml` file:
+ 
+```         
+swiftmailer:
+    default_mailer: file
+    mailers:
+        file:
+            transport: file
 ```
