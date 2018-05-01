@@ -41,18 +41,15 @@ Define FileTransport as service in `services.yml`:
 swiftmailer.mailer.transport.file:
     class: Geekdevs\SwiftMailer\Transport\FileTransport
     arguments:
-      - "@swiftmailer.mailer.file.transport.eventdispatcher"
-      - "%kernel.root_dir%/emails"      
+      - "@swiftmailer.mailer.default.transport.eventdispatcher"
+      - "%kernel.project_dir%/var/emails"      
 ```
 
 Configure SwiftMailer to understand new transport in `config.yml` file:
  
 ```         
 swiftmailer:
-    default_mailer: file
-    mailers:
-        file:
-            transport: file
+    transport: file
 ```
 
 ## Copy plugin
@@ -65,11 +62,11 @@ Define CopyPlugin as service in `services.yml`:
 
 ```
 swiftmailer.mailer.plugin.copy:
-    class: Geekdevs\SwiftMailer\Plugins\CopyPlugin
+    class: Geekdevs\SwiftMailer\Plugin\CopyPlugin
     arguments:
       - "notifications@recipient.com"
     tags:
-      - { name: "swiftmailer.primary.plugin" }
+      - { name: "swiftmailer.default.plugin" }
 ```
 
-Note the tag `swiftmailer.primary.plugin` where "primary" should be the name of your mailer.
+Note the tag `swiftmailer.primary.plugin` where "default" should be the name of your mailer.
