@@ -54,3 +54,22 @@ swiftmailer:
         file:
             transport: file
 ```
+
+## Copy plugin
+
+Copy plugin is useful to BCC all outgoing emails to specific address (e.g. if you want to monitor everything what you send out).
+
+**Connecting to Symfony:**
+
+Define CopyPlugin as service in `services.yml`:
+
+```
+swiftmailer.mailer.plugin.copy:
+    class: Geekdevs\SwiftMailer\Plugins\CopyPlugin
+    arguments:
+      - "notifications@recipient.com"
+    tags:
+      - { name: "swiftmailer.primary.plugin" }
+```
+
+Note the tag `swiftmailer.primary.plugin` where "primary" should be the name of your mailer.
