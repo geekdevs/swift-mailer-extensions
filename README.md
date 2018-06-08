@@ -4,6 +4,9 @@
 
 This project is intended to extend capabilities of [SwiftMailer](https://github.com/swiftmailer/swiftmailer).
 
+Note, that master now only supports SwiftMailer v.6 and not compatible with earlier version.
+If you still need earlier versions, check `v.1` of this package.
+
 ## Transport
 
 ### File transport
