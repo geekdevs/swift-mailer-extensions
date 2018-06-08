@@ -2,6 +2,7 @@
 namespace Geekdevs\SwiftMailer\Transport;
 
 use Swift_Events_EventListener;
+use Swift_Mime_SimpleMessage as Swift_Mime_Message;
 use Swift_Transport;
 use Swift_IoException;
 
@@ -80,12 +81,12 @@ class FileTransport implements Swift_Transport
     /**
      * Sends the given message.
      *
-     * @param \Swift_Mime_Message $message
+     * @param Swift_Mime_Message $message
      * @param string[]           $failedRecipients An array of failures by-reference
      *
      * @return int The number of sent emails
      */
-    public function send(\Swift_Mime_Message $message, &$failedRecipients = null)
+    public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
         if ($evt = $this->eventDispatcher->createSendEvent($this, $message)) {
             $this->eventDispatcher->dispatchEvent($evt, 'beforeSendPerformed');
@@ -111,12 +112,12 @@ class FileTransport implements Swift_Transport
     }
 
     /**
-     * @param \Swift_Mime_Message $message
+     * @param Swift_Mime_Message $message
      * @param null               $failedRecipients
      * @return bool
      * @throws Swift_IoException
      */
-    protected function doSend(\Swift_Mime_Message $message, &$failedRecipients = null)
+    protected function doSend(Swift_Mime_Message $message, &$failedRecipients = null)
     {
         $body = $message->toString();
         $fileName = $this->path.'/'.date('Y-m-d H:i:s');
@@ -163,13 +164,29 @@ class FileTransport implements Swift_Transport
         return $ret;
     }
 
-    /**
-     * @inheritdoc
-     *
-     * @return bool TRUE if the transport is alive
-     */
-    public function ping()
-    {
-        return true;
-    }
+	/**
+	 * Check if this Transport mechanism is alive.
+	 *
+	 * If a Transport mechanism session is no longer functional, the method
+	 * returns FALSE. It is the responsibility of the developer to handle this
+	 * case and restart the Transport mechanism manually.
+	 *
+	 * @example
+	 *
+	 *   if (!$transport->ping()) {
+	 *      $transport->stop();
+	 *      $transport->start();
+	 *   }
+	 *
+	 * The Transport mechanism will be started, if it is not already.
+	 *
+	 * It is undefined if the Transport mechanism attempts to restart as long as
+	 * the return value reflects whether the mechanism is now functional.
+	 *
+	 * @return bool TRUE if the transport is alive
+	 */
+	public function ping()
+	{
+		return true;
+	}
 }
