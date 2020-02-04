@@ -120,7 +120,7 @@ class FileTransport implements Swift_Transport
     protected function doSend(Swift_Mime_Message $message, &$failedRecipients = null)
     {
         $body = $message->toString();
-        $fileName = $this->path.'/'.date('Y-m-d H:i:s');
+        $fileName = $this->path.'/'.date('Y-m-d H_i_s');
 
         for ($i = 0; $i < $this->retryLimit; ++$i) {
             /* We try an exclusive creation of the file. This is an atomic operation, it avoid locking mechanism */
